@@ -1,6 +1,6 @@
 <template>
   <el-table ref="table">
-    <children />
+    <children :key="key" />
   </el-table>
 </template>
 
@@ -22,6 +22,7 @@ import {
   readonly,
   useSlots,
   defineExpose,
+  watch,
 } from 'vue'
 import * as storage from './storage'
 
@@ -134,6 +135,10 @@ const refactorSlot = computed(() => {
 
   return refactorySlot
 })
+
+/* 强制更新 el-table-column */
+const key = ref(0)
+watch(refactorSlot, () => (key.value += 1))
 
 /* 对外暴露的内容 */
 defineExpose({
